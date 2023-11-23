@@ -143,23 +143,23 @@ RV32M  —  стандартное  расширение  к  базовому  
 
 public static long extractBytes(long offset, long byteNum) throws Exception { 
 
-`    `if (byteNum <= 0 || byteNum > 4) { 
+    if (byteNum <= 0 || byteNum > 4) { 
 
-`        `throw new Exception("Wrong number of bytes to read in extractBytes()");     } 
+        throw new Exception("Wrong number of bytes to read in extractBytes()");     } 
 
-`    `long result = 0; 
+    long result = 0; 
 
-`    `for(long i = 0; i < byteNum; i++){ 
+    for(long i = 0; i < byteNum; i++){ 
 
-`        `if (offset + byteNum - i - 1 < 0 || offset + byteNum - i - 1 >= *TOTAL*) {             throw new Exception("Index out of boundaries when trying to read in extractBytes()"); 
+        if (offset + byteNum - i - 1 < 0 || offset + byteNum - i - 1 >= *TOTAL*) {             throw new Exception("Index out of boundaries when trying to read in extractBytes()"); 
 
-`        `} 
+        } 
 
-`        `result = result \* 256 + (*bytes*[(int) (offset + byteNum - i - 1)]); 
+        result = result \* 256 + (*bytes*[(int) (offset + byteNum - i - 1)]); 
 
-`    `} 
+    } 
 
-`    `return result; 
+    return result; 
 
 } 
 
@@ -167,37 +167,37 @@ public static long extractBytes(long offset, long byteNum) throws Exception {
 
 public Header() throws Exception { 
 
-`    `e\_type = Constants.*extractBytes*(16, 2); 
+    e\_type = Constants.*extractBytes*(16, 2); 
 
-`    `e\_machine = Constants.*extractBytes*(18, 2);     e\_version = Constants.*extractBytes*(20, 4);     e\_entry = Constants.*extractBytes*(24, 4); 
+    e\_machine = Constants.*extractBytes*(18, 2);     e\_version = Constants.*extractBytes*(20, 4);     e\_entry = Constants.*extractBytes*(24, 4); 
 
-`    `e\_phoff = Constants.*extractBytes*(28, 4); 
+    e\_phoff = Constants.*extractBytes*(28, 4); 
 
-`    `e\_shoff = Constants.*extractBytes*(32, 4); 
+    e\_shoff = Constants.*extractBytes*(32, 4); 
 
-`    `e\_flags = Constants.*extractBytes*(36, 4); 
+    e\_flags = Constants.*extractBytes*(36, 4); 
 
-`    `e\_ehsize = Constants.*extractBytes*(40, 2); 
+    e\_ehsize = Constants.*extractBytes*(40, 2); 
 
-`    `e\_phentsize = Constants.*extractBytes*(42, 2);     e\_phnum = Constants.*extractBytes*(44, 2); 
+    e\_phentsize = Constants.*extractBytes*(42, 2);     e\_phnum = Constants.*extractBytes*(44, 2); 
 
-`    `e\_shentsize = Constants.*extractBytes*(46, 2);     e\_shnum = Constants.*extractBytes*(48, 2); 
+    e\_shentsize = Constants.*extractBytes*(46, 2);     e\_shnum = Constants.*extractBytes*(48, 2); 
 
-`    `e\_shstrndx = Constants.*extractBytes*(50, 2); } 
+    e\_shstrndx = Constants.*extractBytes*(50, 2); } 
 
 Ещё есть функция для преобразования беззнакового типа в знаковый, используется для преобразования поля **imm:** 
 
 public static long immToSigned(long n, long where){     if ((n & (1L << (where - 1))) != 0) { 
 
-`        `return (n | -(1L << where)); 
+        return (n | -(1L << where)); 
 
-`    `} 
+    } 
 
-`    `else { 
+    else { 
 
-`        `return n; 
+        return n; 
 
-`    `} 
+    } 
 
 } 
 
@@ -205,9 +205,9 @@ public static long immToSigned(long n, long where){     if ((n & (1L << (where -
 
 public static long cutInstruction(long bin, long from, long to) {     bin = bin & ((1L << (from + 1)) - 1); 
 
-`    `bin = bin & (-(1L << to)); 
+    bin = bin & (-(1L << to)); 
 
-`    `return (bin >> to); 
+    return (bin >> to); 
 
 } 
 
@@ -215,9 +215,9 @@ public static long cutInstruction(long bin, long from, long to) {     bin = bin 
 
 public static final Map<Pair<Integer, Integer>, String> *FmtS* = Map.*ofEntries*(         *entry*(new Pair<>(0, 0), "sb"), 
 
-`        `*entry*(new Pair<>(0x1, 0), "sh"), 
+        *entry*(new Pair<>(0x1, 0), "sh"), 
 
-`        `*entry*(new Pair<>(0x2, 0), "sw") 
+        *entry*(new Pair<>(0x2, 0), "sw") 
 
 ); 
 
@@ -245,91 +245,91 @@ public static final Map<Pair<Integer, Integer>, String> *FmtS* = Map.*ofEntries*
 
 00010074   <main>: 
 
-`   `10074:  ff010113   addi sp, sp -16 
+   10074:  ff010113   addi sp, sp -16 
 
-`   `10078:  00112623     sw ra, 12(sp) 
+   10078:  00112623     sw ra, 12(sp) 
 
-`   `1007c:  030000ef    jal ra, 0x100ac <mmul>    10080:  00c12083     lw ra, 12(sp) 
+   1007c:  030000ef    jal ra, 0x100ac <mmul>    10080:  00c12083     lw ra, 12(sp) 
 
-`   `10084:  00000513   addi a0, zero 0 
+   10084:  00000513   addi a0, zero 0 
 
-`   `10088:  01010113   addi sp, sp 16 
+   10088:  01010113   addi sp, sp 16 
 
-`   `1008c:  00008067   jalr zero, 0(ra) 
+   1008c:  00008067   jalr zero, 0(ra) 
 
-`   `10090:  00000013   addi zero, zero 0 
+   10090:  00000013   addi zero, zero 0 
 
-`   `10094:  00100137    lui sp, 256 
+   10094:  00100137    lui sp, 256 
 
-`   `10098:  fddff0ef    jal ra, 0x10074 <main>    1009c:  00050593   addi a1, a0 0 
+   10098:  fddff0ef    jal ra, 0x10074 <main>    1009c:  00050593   addi a1, a0 0 
 
-`   `100a0:  00a00893   addi a7, zero 10 
+   100a0:  00a00893   addi a7, zero 10 
 
-`   `100a4:  0ff0000f  unknown\_instruction    100a8:  00000073  ecall 
+   100a4:  0ff0000f  unknown\_instruction    100a8:  00000073  ecall 
 
 000100ac   <mmul>: 
 
-`   `100ac:  00011f37    lui t5, 17 
+   100ac:  00011f37    lui t5, 17 
 
-`   `100b0:  124f0513   addi a0, t5 292 
+   100b0:  124f0513   addi a0, t5 292 
 
-`   `100b4:  65450513   addi a0, a0 1620 
+   100b4:  65450513   addi a0, a0 1620 
 
-`   `100b8:  124f0f13   addi t5, t5 292 
+   100b8:  124f0f13   addi t5, t5 292 
 
-`   `100bc:  e4018293   addi t0, gp -448 
+   100bc:  e4018293   addi t0, gp -448 
 
-`   `100c0:  fd018f93   addi t6, gp -48 
+   100c0:  fd018f93   addi t6, gp -48 
 
-`   `100c4:  02800e93   addi t4, zero 40 000100c8   <L2>: 
+   100c4:  02800e93   addi t4, zero 40 000100c8   <L2>: 
 
-`   `100c8:  fec50e13   addi t3, a0 -20 
+   100c8:  fec50e13   addi t3, a0 -20 
 
-`   `100cc:  000f0313   addi t1, t5 0 
+   100cc:  000f0313   addi t1, t5 0 
 
-`   `100d0:  000f8893   addi a7, t6 0 
+   100d0:  000f8893   addi a7, t6 0 
 
-`   `100d4:  00000813   addi a6, zero 0 000100d8   <L1>: 
+   100d4:  00000813   addi a6, zero 0 000100d8   <L1>: 
 
-`   `100d8:  00088693   addi a3, a7 0 
+   100d8:  00088693   addi a3, a7 0 
 
-`   `100dc:  000e0793   addi a5, t3 0 
+   100dc:  000e0793   addi a5, t3 0 
 
-`   `100e0:  00000613   addi a2, zero 0 
+   100e0:  00000613   addi a2, zero 0 
 
 000100e4   <L0>: 
 
-`   `100e4:  00078703     lb a4, 0(a5) 
+   100e4:  00078703     lb a4, 0(a5) 
 
-`   `100e8:  00069583     lh a1, 0(a3) 
+   100e8:  00069583     lh a1, 0(a3) 
 
-`   `100ec:  00178793   addi a5, a5 1 
+   100ec:  00178793   addi a5, a5 1 
 
-`   `100f0:  02868693   addi a3, a3 40 
+   100f0:  02868693   addi a3, a3 40 
 
-`   `100f4:  02b70733    mul a4, a4, a1 
+   100f4:  02b70733    mul a4, a4, a1 
 
-`   `100f8:  00e60633    add a2, a2, a4 
+   100f8:  00e60633    add a2, a2, a4 
 
-`   `100fc:  fea794e3    bne a5, a0 0x100e4 <L0> 
+   100fc:  fea794e3    bne a5, a0 0x100e4 <L0> 
 
-`   `10100:  00c32023     sw a2, 0(t1) 
+   10100:  00c32023     sw a2, 0(t1) 
 
-`   `10104:  00280813   addi a6, a6 2 
+   10104:  00280813   addi a6, a6 2 
 
-`   `10108:  00430313   addi t1, t1 4 
+   10108:  00430313   addi t1, t1 4 
 
-`   `1010c:  00288893   addi a7, a7 2 
+   1010c:  00288893   addi a7, a7 2 
 
-`   `10110:  fdd814e3    bne a6, t4 0x100d8 <L1> 
+   10110:  fdd814e3    bne a6, t4 0x100d8 <L1> 
 
-`   `10114:  050f0f13   addi t5, t5 80 
+   10114:  050f0f13   addi t5, t5 80 
 
-`   `10118:  01478513   addi a0, a5 20 
+   10118:  01478513   addi a0, a5 20 
 
-`   `1011c:  fa5f16e3    bne t5, t0 0x100c8 <L2> 
+   1011c:  fa5f16e3    bne t5, t0 0x100c8 <L2> 
 
-`   `10120:  00008067   jalr zero, 0(ra) 
+   10120:  00008067   jalr zero, 0(ra) 
 
 Symbol Value           Size Type   Bind   Vis    Index Name 
 
@@ -389,275 +389,275 @@ import java.util.List;
 
 public class Main { 
 
-`    `public static void main(String[] args) throws Exception {         if(args.length < 3){ 
+    public static void main(String[] args) throws Exception {         if(args.length < 3){ 
 
-`            `throw new Exception("Not enough arguments"); 
+            throw new Exception("Not enough arguments"); 
 
-`        `} 
+        } 
 
-`        `String input\_file = args[1]; 
+        String input\_file = args[1]; 
 
-`        `String output\_file = args[2]; 
+        String output\_file = args[2]; 
 
-`        `File f1 = new File(input\_file); 
+        File f1 = new File(input\_file); 
 
-`        `if(!f1.exists() || f1.isDirectory()) { 
+        if(!f1.exists() || f1.isDirectory()) { 
 
-`            `System.*out*.println("Input file not found");             return; 
+            System.*out*.println("Input file not found");             return; 
 
-`        `} 
+        } 
 
-`        `File f2 = new File(output\_file); 
+        File f2 = new File(output\_file); 
 
-`        `if(!f2.exists() || f2.isDirectory()) { 
+        if(!f2.exists() || f2.isDirectory()) { 
 
-`            `System.*out*.println("Output file not found");             return; 
+            System.*out*.println("Output file not found");             return; 
 
-`        `} 
+        } 
 
-`        `byte[] bytes\_tmp; 
+        byte[] bytes\_tmp; 
 
-`        `try (DataInputStream reader = new DataInputStream(new FileInputStream(input\_file))) { 
+        try (DataInputStream reader = new DataInputStream(new FileInputStream(input\_file))) { 
 
-`            `bytes\_tmp = reader.readAllBytes(); 
+            bytes\_tmp = reader.readAllBytes(); 
 
-`        `} catch(Exception ex) { 
+        } catch(Exception ex) { 
 
-`            `throw new Exception("Error reading file: " + ex.getMessage());         } 
+            throw new Exception("Error reading file: " + ex.getMessage());         } 
 
-`        `Constants.*TOTAL* = bytes\_tmp.length; 
+        Constants.*TOTAL* = bytes\_tmp.length; 
 
-`        `Constants.*bytes* = new long[(int) Constants.*TOTAL*]; 
+        Constants.*bytes* = new long[(int) Constants.*TOTAL*]; 
 
-`        `for(long i = 0; i < Constants.*TOTAL*; i++) { 
+        for(long i = 0; i < Constants.*TOTAL*; i++) { 
 
-`            `long c = ((bytes\_tmp[(int) i] < 0) ? 256 : 0) + bytes\_tmp[(int) i];             Constants.*bytes*[(int) i] = c; 
+            long c = ((bytes\_tmp[(int) i] < 0) ? 256 : 0) + bytes\_tmp[(int) i];             Constants.*bytes*[(int) i] = c; 
 
-`        `} 
+        } 
 
-`        `long magic = Constants.*extractBytes*(0, 4);         if(magic != Constants.*ELF\_MAGIC*) { 
+        long magic = Constants.*extractBytes*(0, 4);         if(magic != Constants.*ELF\_MAGIC*) { 
 
-`            `throw new Exception("Not an ELF file");         } 
+            throw new Exception("Not an ELF file");         } 
 
-`        `*// Extract elf header fields* 
+        *// Extract elf header fields* 
 \*
-`        `Header header = new Header(); 
+        Header header = new Header(); 
 
-`        `if(header.e\_machine != 0xF3) { 
+        if(header.e\_machine != 0xF3) { 
 
-`            `throw new Exception("File is not for RISC-V architecture");         } 
+            throw new Exception("File is not for RISC-V architecture");         } 
 
-`        `if(header.e\_version != 1) { 
+        if(header.e\_version != 1) { 
 
-`            `throw new Exception("Wrong file version");         } 
+            throw new Exception("Wrong file version");         } 
 
-`        `if(header.e\_ehsize != 52) { 
+        if(header.e\_ehsize != 52) { 
 
-`            `throw new Exception("Wrong header size");         } 
+            throw new Exception("Wrong header size");         } 
 
-`        `*// Parse section headers and their names* 
+        *// Parse section headers and their names* 
 \*
-`        `SectionHeader sectionTable = new SectionHeader(header.e\_shoff, header.e\_shstrndx, header.e\_shentsize); 
+        SectionHeader sectionTable = new SectionHeader(header.e\_shoff, header.e\_shstrndx, header.e\_shentsize); 
 
-`        `for(long i = 0; i < header.e\_shnum; i++){ 
+        for(long i = 0; i < header.e\_shnum; i++){ 
 
-`            `SectionHeader sectionHeader = new SectionHeader(header.e\_shoff, i, header.e\_shentsize); 
+            SectionHeader sectionHeader = new SectionHeader(header.e\_shoff, i, header.e\_shentsize); 
 
 long pos = sectionTable.sh\_offset + sectionHeader.sh\_name; 
 
-`            `StringBuilder name = new StringBuilder(); 
+            StringBuilder name = new StringBuilder(); 
 
-`            `while(Constants.*bytes*[(int) pos] != 0){ 
+            while(Constants.*bytes*[(int) pos] != 0){ 
 
-`                `name.append((char) Constants.*bytes*[(int) pos]); 
+                name.append((char) Constants.*bytes*[(int) pos]); 
 
-`                `pos++; 
+                pos++; 
 
-`            `} 
+            } 
 
-`            `Constants.*sections*.put(name.toString(), sectionHeader);         } 
+            Constants.*sections*.put(name.toString(), sectionHeader);         } 
 
 *// Parsing symtab* 
 
 SectionHeader symtab = Constants.*sections*.get(".symtab"); SectionHeader strtab = Constants.*sections*.get(".strtab"); 
 
-`        `for (long i = 0; i < symtab.sh\_size / 16; i++) { 
+        for (long i = 0; i < symtab.sh\_size / 16; i++) { 
 
-`            `Symbol symbol = new Symbol(symtab.sh\_offset + i \* 16, strtab.sh\_offset); 
+            Symbol symbol = new Symbol(symtab.sh\_offset + i \* 16, strtab.sh\_offset); 
 
-`            `Constants.*symbols*.add(symbol); 
+            Constants.*symbols*.add(symbol); 
 
-`            `Constants.*tags*.put(symbol.st\_value, "<" + symbol.name + ">"); 
+            Constants.*tags*.put(symbol.st\_value, "<" + symbol.name + ">"); 
 
-`        `} 
+        } 
 
-`        `*// Parsing text* 
+        *// Parsing text* 
 \*
-`        `SectionHeader text = Constants.*sections*.get(".text"); 
+        SectionHeader text = Constants.*sections*.get(".text"); 
 
-`        `List<Pair<Long, Instruction>> instructions = new LinkedList<>(); 
+        List<Pair<Long, Instruction>> instructions = new LinkedList<>(); 
 
-`        `long addr = header.e\_entry; 
+        long addr = header.e\_entry; 
 
-`        `for(long off = text.sh\_offset; off < text.sh\_offset + text.sh\_size; off += 4){ 
+        for(long off = text.sh\_offset; off < text.sh\_offset + text.sh\_size; off += 4){ 
 
-`            `Instruction instruction = new Instruction(off, addr); 
+            Instruction instruction = new Instruction(off, addr); 
 
-`            `instructions.add(new Pair<>(addr, instruction)); 
+            instructions.add(new Pair<>(addr, instruction)); 
 
-`            `addr += 4; 
+            addr += 4; 
 
-`        `} 
+        } 
 
-`        `try (Writer writer = new BufferedWriter(new OutputStreamWriter( 
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter( 
 
-`                `new FileOutputStream(output\_file), StandardCharsets.*UTF\_8*))) { 
+                new FileOutputStream(output\_file), StandardCharsets.*UTF\_8*))) { 
 
-`            `writer.write(".text\n"); 
+            writer.write(".text\n"); 
 
-`            `for(Pair<Long, Instruction> a : instructions) { 
+            for(Pair<Long, Instruction> a : instructions) { 
 
-`                `if(Constants.*tags*.containsKey(a.getFirst())) { 
+                if(Constants.*tags*.containsKey(a.getFirst())) { 
 
-`                    `writer.write(String.*format*("%08x   %s:\n", a.getFirst(), Constants.*tags*.get(a.getFirst()))); 
+                    writer.write(String.*format*("%08x   %s:\n", a.getFirst(), Constants.*tags*.get(a.getFirst()))); 
 
-`                `} 
+                } 
 
-`                `Instruction inst = a.getSecond(); 
+                Instruction inst = a.getSecond(); 
 
-`                `switch (inst.type) { 
+                switch (inst.type) { 
 
-`                    `case *I* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s %d\n", 
+                    case *I* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s %d\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rd, inst.rs1, inst.imm)); 
+                            a.getFirst(), inst.bin, inst.name, inst.rd, inst.rs1, inst.imm)); 
 
-`                    `case *IJalr*, *ILoad* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d(%s)\n", 
+                    case *IJalr*, *ILoad* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d(%s)\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rd, inst.imm, inst.rs1)); 
+                            a.getFirst(), inst.bin, inst.name, inst.rd, inst.imm, inst.rs1)); 
 
-`                    `case *IEnv* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\n", a.getFirst(), inst.bin, inst.name)); 
+                    case *IEnv* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\n", a.getFirst(), inst.bin, inst.name)); 
 
-`                    `case *RM* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s, %s\n", 
+                    case *RM* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s, %s\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rd, inst.rs1, inst.rs2)); 
+                            a.getFirst(), inst.bin, inst.name, inst.rd, inst.rs1, inst.rs2)); 
 
-`                    `case *S* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d(%s)\n", 
+                    case *S* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d(%s)\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rs2, inst.imm, inst.rs1)); 
+                            a.getFirst(), inst.bin, inst.name, inst.rs2, inst.imm, inst.rs1)); 
 
-`                    `case *J* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, 0x%x %s\n", 
+                    case *J* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, 0x%x %s\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rd, a.getFirst() + inst.imm, 
+                            a.getFirst(), inst.bin, inst.name, inst.rd, a.getFirst() + inst.imm, 
 
-`                            `Constants.*tags*.get(a.getFirst() + inst.imm))); 
+                            Constants.*tags*.get(a.getFirst() + inst.imm))); 
 
-`                    `case *UAui*, *ULui* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d\n", 
+                    case *UAui*, *ULui* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %d\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rd, inst.imm)); 
+                            a.getFirst(), inst.bin, inst.name, inst.rd, inst.imm)); 
 
-`                    `case *B* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s 0x%x %s\n", 
+                    case *B* -> writer.write(String.*format*("   %05x:\t%08x\t%7s\t%s, %s 0x%x %s\n", 
 
-`                            `a.getFirst(), inst.bin, inst.name, inst.rs1, inst.rs2,                             a.getFirst() + inst.imm, Constants.*tags*.get(a.getFirst() + inst.imm))); 
+                            a.getFirst(), inst.bin, inst.name, inst.rs1, inst.rs2,                             a.getFirst() + inst.imm, Constants.*tags*.get(a.getFirst() + inst.imm))); 
 
-`                    `case *unknown\_instruction* -> writer.write(String.*format*("   %05x:\t%08x\t\t%7s\n", a.getFirst(), inst.bin, inst.type)); 
+                    case *unknown\_instruction* -> writer.write(String.*format*("   %05x:\t%08x\t\t%7s\n", a.getFirst(), inst.bin, inst.type)); 
 
-`                    `default -> throw new Exception("Unknown instruction encountered while printing"); 
+                    default -> throw new Exception("Unknown instruction encountered while printing"); 
 
-`                `} 
+                } 
 
-`            `} 
+            } 
 
-`            `writer.write("Symbol Value             Size Type  Bind   Vis    Index Name\n"); 
+            writer.write("Symbol Value             Size Type  Bind   Vis    Index Name\n"); 
 
-`            `int symInd = 0; 
+            int symInd = 0; 
 
-`            `for(Symbol symbol : Constants.*symbols*) { 
+            for(Symbol symbol : Constants.*symbols*) { 
 
-`                `String type = switch((int) (symbol.st\_info & 15)){ 
+                String type = switch((int) (symbol.st\_info & 15)){ 
 
-`                    `case 0  -> "NOTYPE"; 
+                    case 0  -> "NOTYPE"; 
 
-`                    `case 1  -> "OBJECT"; 
+                    case 1  -> "OBJECT"; 
 
-`                    `case 2  -> "FUNC"; 
+                    case 2  -> "FUNC"; 
 
-`                    `case 3  -> "SECTION"; 
+                    case 3  -> "SECTION"; 
 
-`                    `case 4  -> "FILE"; 
+                    case 4  -> "FILE"; 
 
-`                    `case 5  -> "COMMON"; 
+                    case 5  -> "COMMON"; 
 
-`                    `case 6  -> "TLS"; 
+                    case 6  -> "TLS"; 
 
-`                    `case 10 -> "LOOS"; 
+                    case 10 -> "LOOS"; 
 
-`                    `case 12 -> "HIOS"; 
+                    case 12 -> "HIOS"; 
 
-`                    `case 13 -> "LOPROC"; 
+                    case 13 -> "LOPROC"; 
 
-`                    `case 15 -> "HIPROC"; 
+                    case 15 -> "HIPROC"; 
 
-`                    `default -> throw new Exception("Unknown symbol type"); 
+                    default -> throw new Exception("Unknown symbol type"); 
 
-`                `}; 
+                }; 
 
-`                `String bind = switch((int) (symbol.st\_info >> 4)){ 
+                String bind = switch((int) (symbol.st\_info >> 4)){ 
 
-`                    `case 0  -> "LOCAL"; 
+                    case 0  -> "LOCAL"; 
 
-`                    `case 1  -> "GLOBAL"; 
+                    case 1  -> "GLOBAL"; 
 
-`                    `case 2  -> "WEAK"; 
+                    case 2  -> "WEAK"; 
 
-`                    `case 10 -> "LOOS"; 
+                    case 10 -> "LOOS"; 
 
-`                    `case 12 -> "HIOS"; 
+                    case 12 -> "HIOS"; 
 
-`                    `case 13 -> "LOPROC"; 
+                    case 13 -> "LOPROC"; 
 
-`                    `case 15 -> "HIPROC"; 
+                    case 15 -> "HIPROC"; 
 
-`                    `default -> throw new Exception("Unknown symbol binding"); 
+                    default -> throw new Exception("Unknown symbol binding"); 
 
-`                `}; 
+                }; 
 
-`                `String vis = switch((int) symbol.st\_other){ 
+                String vis = switch((int) symbol.st\_other){ 
 
-`                    `case 0 -> "DEFAULT"; 
+                    case 0 -> "DEFAULT"; 
 
-`                    `case 1 -> "INTERNAL"; 
+                    case 1 -> "INTERNAL"; 
 
-`                    `case 2 -> "HIDDEN"; 
+                    case 2 -> "HIDDEN"; 
 
-`                    `case 3 -> "PROTECTED"; 
+                    case 3 -> "PROTECTED"; 
 
-`                    `default -> throw new Exception("Unknown symbol visibility");                 }; 
+                    default -> throw new Exception("Unknown symbol visibility");                 }; 
 
-`                `String index = switch((int) symbol.st\_shndx){ 
+                String index = switch((int) symbol.st\_shndx){ 
 
-`                    `case 0xfff1 -> "ABS"; 
+                    case 0xfff1 -> "ABS"; 
 
-`                    `case 0 -> "UNDEF"; 
+                    case 0 -> "UNDEF"; 
 
-`                    `case 0xffff -> "XINDEX"; 
+                    case 0xffff -> "XINDEX"; 
 
-`                    `default -> Integer.*toString*((int) symbol.st\_shndx); 
+                    default -> Integer.*toString*((int) symbol.st\_shndx); 
 
-`                `}; 
+                }; 
 
-`                `writer.write(String.*format*("[%4d] 0x%-15X %5d %-8s %-8s %-8s %6s %s\n", symInd, symbol.st\_value, symbol.st\_size, type, bind, vis, index, symbol.name)); 
+                writer.write(String.*format*("[%4d] 0x%-15X %5d %-8s %-8s %-8s %6s %s\n", symInd, symbol.st\_value, symbol.st\_size, type, bind, vis, index, symbol.name)); 
 
-`                `symInd++; 
+                symInd++; 
 
-`            `} 
+            } 
 
-`        `} catch(Exception ex) { 
+        } catch(Exception ex) { 
 
-`            `throw new Exception("Error writing to file: " + ex.getMessage()); 
+            throw new Exception("Error writing to file: " + ex.getMessage()); 
 
-`        `} 
+        } 
 
-`    `} 
+    } 
 
 } 
 
@@ -667,55 +667,55 @@ import java.util.Objects;
 
 public class Instruction{ 
 
-`    `public String name; 
+    public String name; 
 
-`    `public String rd; 
+    public String rd; 
 
-`    `public String rs1; 
+    public String rs1; 
 
-`    `public String rs2; 
+    public String rs2; 
 
-`    `public long imm; 
+    public long imm; 
 
-`    `public Constants.FMT type; 
+    public Constants.FMT type; 
 
-`    `public long bin; 
+    public long bin; 
 
-`    `public Instruction(long offset, long address) throws Exception {         bin = Constants.*extractBytes*(offset, 4); 
+    public Instruction(long offset, long address) throws Exception {         bin = Constants.*extractBytes*(offset, 4); 
 
-`        `long opcode = Constants.*cutInstruction*(bin, 6, 0); 
+        long opcode = Constants.*cutInstruction*(bin, 6, 0); 
 
-`        `name = "unknown instruction"; 
+        name = "unknown instruction"; 
 
-`        `type = Constants.FMT.*unknown\_instruction*; 
+        type = Constants.FMT.*unknown\_instruction*; 
 
-`        `if(opcode == 0b0110011){ 
+        if(opcode == 0b0110011){ 
 
-`            `type = Constants.FMT.*RM*; 
+            type = Constants.FMT.*RM*; 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
+            long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
 
-`            `long funct7 = Constants.*cutInstruction*(bin, 31, 25); 
+            long funct7 = Constants.*cutInstruction*(bin, 31, 25); 
 
-`            `long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
+            long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
 
-`            `long rs2Id = Constants.*cutInstruction*(bin, 24, 20); 
+            long rs2Id = Constants.*cutInstruction*(bin, 24, 20); 
 
-`            `name = Constants.*FmtRM*.get(new Pair<>((int)funct3, (int)funct7));             imm = 0; 
+            name = Constants.*FmtRM*.get(new Pair<>((int)funct3, (int)funct7));             imm = 0; 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = Constants.*registerNames*.get((int)rs2Id); 
+            rs2 = Constants.*registerNames*.get((int)rs2Id); 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b0010011) { 
+        if(opcode == 0b0010011) { 
 
-`            `type = Constants.FMT.*I*; 
+            type = Constants.FMT.*I*; 
 
 long rdId = Constants.*cutInstruction*(bin, 11, 7); long funct3 = Constants.*cutInstruction*(bin, 14, 12); long funct7 = 0; 
 
@@ -723,113 +723,113 @@ long rs1Id = Constants.*cutInstruction*(bin, 19, 15); imm = Constants.*cutInstru
 
 imm = Constants.*immToSigned*(imm, 12); 
 
-`            `if(funct3 == 0x5) { 
+            if(funct3 == 0x5) { 
 
-`                `funct7 = Constants.*cutInstruction*(bin, 31, 25); 
+                funct7 = Constants.*cutInstruction*(bin, 31, 25); 
 
-`            `} 
+            } 
 
-`            `name = Constants.*FmtI*.get(new Pair<>((int)funct3, (int)funct7));             rd = Constants.*registerNames*.get((int)rdId); 
+            name = Constants.*FmtI*.get(new Pair<>((int)funct3, (int)funct7));             rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b0000011) { 
+        if(opcode == 0b0000011) { 
 
-`            `type = Constants.FMT.*ILoad*; 
+            type = Constants.FMT.*ILoad*; 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
+            long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
 
-`            `long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
+            long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
 
-`            `imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
+            imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
 
-`            `name = Constants.*FmtILoad*.get(new Pair<>((int)funct3, 0)); 
+            name = Constants.*FmtILoad*.get(new Pair<>((int)funct3, 0)); 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b1100111) { 
+        if(opcode == 0b1100111) { 
 
-`            `type = Constants.FMT.*IJalr*; 
+            type = Constants.FMT.*IJalr*; 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
+            long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
 
-`            `imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
+            imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
 
-`            `name = "jalr"; 
+            name = "jalr"; 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b1110011) { 
+        if(opcode == 0b1110011) { 
 
-`            `type = Constants.FMT.*IEnv*; 
+            type = Constants.FMT.*IEnv*; 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `long funct7 = Constants.*cutInstruction*(bin, 31, 20); 
+            long funct7 = Constants.*cutInstruction*(bin, 31, 20); 
 
-`            `long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
+            long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
 
-`            `imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
+            imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 20), 12); 
 
-`            `name = (funct7 == 0 ? "ecall" : "ebreak"); 
+            name = (funct7 == 0 ? "ecall" : "ebreak"); 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b0100011) { 
+        if(opcode == 0b0100011) { 
 
-`            `type = Constants.FMT.*S*; 
+            type = Constants.FMT.*S*; 
 
-`            `imm = 0; 
+            imm = 0; 
 
-`            `imm |= (Constants.*cutInstruction*(bin, 31, 25) >> 5);             imm |= Constants.*cutInstruction*(bin, 11, 7); 
+            imm |= (Constants.*cutInstruction*(bin, 31, 25) >> 5);             imm |= Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
+            long funct3 = Constants.*cutInstruction*(bin, 14, 12); 
 
-`            `long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
+            long rs1Id = Constants.*cutInstruction*(bin, 19, 15); 
 
-`            `long rs2Id = Constants.*cutInstruction*(bin, 24, 20); 
+            long rs2Id = Constants.*cutInstruction*(bin, 24, 20); 
 
-`            `name = Constants.*FmtS*.get(new Pair<>((int)funct3, 0));             imm = Constants.*immToSigned*(imm, 12); 
+            name = Constants.*FmtS*.get(new Pair<>((int)funct3, 0));             imm = Constants.*immToSigned*(imm, 12); 
 
-`            `rd = ""; 
+            rd = ""; 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = Constants.*registerNames*.get((int)rs2Id); 
+            rs2 = Constants.*registerNames*.get((int)rs2Id); 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b1100011) { 
+        if(opcode == 0b1100011) { 
 
-`            `type = Constants.FMT.*B*; 
+            type = Constants.FMT.*B*; 
 
-`            `long imm12\_105 = Constants.*cutInstruction*(bin, 31, 25);             long imm41\_11 = Constants.*cutInstruction*(bin, 11, 7); 
+            long imm12\_105 = Constants.*cutInstruction*(bin, 31, 25);             long imm41\_11 = Constants.*cutInstruction*(bin, 11, 7); 
 
 long imm12th = Constants.*cutInstruction*(imm12\_105, 6, 6); long imm105 = Constants.*cutInstruction*(imm12\_105, 5, 0); long imm41 = Constants.*cutInstruction*(imm41\_11, 4, 1); long imm11th = Constants.*cutInstruction*(imm41\_11, 0, 0); imm = 0; 
 
@@ -843,31 +843,31 @@ imm |= (imm41 << 1);
 
 long funct3 = Constants.*cutInstruction*(bin, 14, 12); long rs1Id = Constants.*cutInstruction*(bin, 19, 15); long rs2Id = Constants.*cutInstruction*(bin, 24, 20); 
 
-`            `name = Constants.*FmtB*.get(new Pair<>((int)funct3, 0));             imm = Constants.*immToSigned*(imm, 13); 
+            name = Constants.*FmtB*.get(new Pair<>((int)funct3, 0));             imm = Constants.*immToSigned*(imm, 13); 
 
-`            `if(!Constants.*tags*.containsKey(address + imm)){ 
+            if(!Constants.*tags*.containsKey(address + imm)){ 
 
-`                `String nextTag = "<L" + Constants.*TAGINDEX* + ">";                 Constants.*tags*.put(address + imm, nextTag); 
+                String nextTag = "<L" + Constants.*TAGINDEX* + ">";                 Constants.*tags*.put(address + imm, nextTag); 
 
-`                `Constants.*TAGINDEX*++; 
+                Constants.*TAGINDEX*++; 
 
-`            `} 
+            } 
 
-`            `rd = ""; 
+            rd = ""; 
 
-`            `rs1 = Constants.*registerNames*.get((int)rs1Id); 
+            rs1 = Constants.*registerNames*.get((int)rs1Id); 
 
-`            `rs2 = Constants.*registerNames*.get((int)rs2Id); 
+            rs2 = Constants.*registerNames*.get((int)rs2Id); 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b1101111) { 
+        if(opcode == 0b1101111) { 
 
-`            `type = Constants.FMT.*J*; 
+            type = Constants.FMT.*J*; 
 
-`            `imm = 0; 
+            imm = 0; 
 
-`            `long imm20th = Constants.*cutInstruction*(bin, 31, 31);             long imm101 = Constants.*cutInstruction*(bin, 30, 21);             long imm11th = Constants.*cutInstruction*(bin, 20, 20);             long imm1912 = Constants.*cutInstruction*(bin, 19, 12); 
+            long imm20th = Constants.*cutInstruction*(bin, 31, 31);             long imm101 = Constants.*cutInstruction*(bin, 30, 21);             long imm11th = Constants.*cutInstruction*(bin, 20, 20);             long imm1912 = Constants.*cutInstruction*(bin, 19, 12); 
 
 imm |= (imm20th << 20); imm |= (imm101 << 1); imm |= (imm11th << 11); imm |= (imm1912 << 12); 
 
@@ -875,81 +875,81 @@ imm = Constants.*immToSigned*(imm, 21);
 
 long rdId = Constants.*cutInstruction*(bin, 11, 7); name = "jal"; if(!Constants.*tags*.containsKey(address + imm)) { 
 
-`                `String nextTag = "<L" + Constants.*TAGINDEX* + ">"; 
+                String nextTag = "<L" + Constants.*TAGINDEX* + ">"; 
 
-`                `Constants.*tags*.put(address + imm, nextTag); 
+                Constants.*tags*.put(address + imm, nextTag); 
 
-`                `Constants.*TAGINDEX*++; 
+                Constants.*TAGINDEX*++; 
 
-`            `} 
+            } 
 
-`            `imm = Constants.*immToSigned*(imm, 21); 
+            imm = Constants.*immToSigned*(imm, 21); 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = ""; 
+            rs1 = ""; 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b0110111) { 
+        if(opcode == 0b0110111) { 
 
-`            `type = Constants.FMT.*ULui*; 
+            type = Constants.FMT.*ULui*; 
 
-`            `name = "lui"; 
+            name = "lui"; 
 
-`            `imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 12), 21); 
+            imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 12), 21); 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = ""; 
+            rs1 = ""; 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`        `if(opcode == 0b0010111) { 
+        if(opcode == 0b0010111) { 
 
-`            `type = Constants.FMT.*UAui*; 
+            type = Constants.FMT.*UAui*; 
 
-`            `name = "auipc"; 
+            name = "auipc"; 
 
-`            `imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 12), 21); 
+            imm = Constants.*immToSigned*(Constants.*cutInstruction*(bin, 31, 12), 21); 
 
-`            `long rdId = Constants.*cutInstruction*(bin, 11, 7); 
+            long rdId = Constants.*cutInstruction*(bin, 11, 7); 
 
-`            `rd = Constants.*registerNames*.get((int)rdId); 
+            rd = Constants.*registerNames*.get((int)rdId); 
 
-`            `rs1 = ""; 
+            rs1 = ""; 
 
-`            `rs2 = ""; 
+            rs2 = ""; 
 
-`        `} 
+        } 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public boolean equals(Object o) { 
+    public boolean equals(Object o) { 
 
-`        `if (this == o) return true; 
+        if (this == o) return true; 
 
-`        `if (o == null || getClass() != o.getClass()) return false; 
+        if (o == null || getClass() != o.getClass()) return false; 
 
-`        `Instruction that = (Instruction) o; 
+        Instruction that = (Instruction) o; 
 
-`        `return imm == that.imm && bin == that.bin && Objects.*equals*(name, that.name) && Objects.*equals*(rd, that.rd) && Objects.*equals*(rs1, that.rs1) && Objects.*equals*(rs2, that.rs2) && type == that.type; 
+        return imm == that.imm && bin == that.bin && Objects.*equals*(name, that.name) && Objects.*equals*(rd, that.rd) && Objects.*equals*(rs1, that.rs1) && Objects.*equals*(rs2, that.rs2) && type == that.type; 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public int hashCode() { 
+    public int hashCode() { 
 
-`        `return Objects.*hash*(name, rd, rs1, rs2, imm, type, bin);     } 
+        return Objects.*hash*(name, rd, rs1, rs2, imm, type, bin);     } 
 
 } 
 
@@ -959,55 +959,55 @@ import java.util.Objects;
 
 public class Symbol{ 
 
-`    `public long st\_name;     public long st\_value;     public long st\_size;     public long st\_info;     public long st\_other;     public long st\_shndx;     public String name; 
+    public long st\_name;     public long st\_value;     public long st\_size;     public long st\_info;     public long st\_other;     public long st\_shndx;     public String name; 
 
-`    `public Symbol(long offset, long strtabOffset) throws Exception {         st\_name = Constants.*extractBytes*(offset + 0, 4); 
+    public Symbol(long offset, long strtabOffset) throws Exception {         st\_name = Constants.*extractBytes*(offset + 0, 4); 
 
-`        `st\_value = Constants.*extractBytes*(offset + 4, 4); 
+        st\_value = Constants.*extractBytes*(offset + 4, 4); 
 
-`        `st\_size = Constants.*extractBytes*(offset + 8, 4); 
+        st\_size = Constants.*extractBytes*(offset + 8, 4); 
 
-`        `st\_info = Constants.*extractBytes*(offset + 12, 1); 
+        st\_info = Constants.*extractBytes*(offset + 12, 1); 
 
-`        `st\_other = Constants.*extractBytes*(offset + 13, 1); 
+        st\_other = Constants.*extractBytes*(offset + 13, 1); 
 
-`        `st\_shndx = Constants.*extractBytes*(offset + 14, 2); 
+        st\_shndx = Constants.*extractBytes*(offset + 14, 2); 
 
-`        `name = ""; 
+        name = ""; 
 
-`        `int k = (int) (strtabOffset + st\_name); 
+        int k = (int) (strtabOffset + st\_name); 
 
-`        `while(Constants.*bytes*[k] != 0){ 
+        while(Constants.*bytes*[k] != 0){ 
 
-`            `name += (char) Constants.*bytes*[k]; 
+            name += (char) Constants.*bytes*[k]; 
 
-`            `k++; 
+            k++; 
 
-`        `} 
+        } 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public boolean equals(Object o) { 
+    public boolean equals(Object o) { 
 
-`        `if (this == o) return true; 
+        if (this == o) return true; 
 
-`        `if (o == null || getClass() != o.getClass()) return false; 
+        if (o == null || getClass() != o.getClass()) return false; 
 
-`        `Symbol symbol = (Symbol) o; 
+        Symbol symbol = (Symbol) o; 
 
-`        `return st\_name == symbol.st\_name && st\_value == symbol.st\_value && st\_size == symbol.st\_size && st\_info == symbol.st\_info && st\_other == symbol.st\_other && st\_shndx == symbol.st\_shndx && Objects.*equals*(name, symbol.name); 
+        return st\_name == symbol.st\_name && st\_value == symbol.st\_value && st\_size == symbol.st\_size && st\_info == symbol.st\_info && st\_other == symbol.st\_other && st\_shndx == symbol.st\_shndx && Objects.*equals*(name, symbol.name); 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public int hashCode() { 
+    public int hashCode() { 
 
-`        `return Objects.*hash*(st\_name, st\_value, st\_size, st\_info, st\_other, st\_shndx, name); 
+        return Objects.*hash*(st\_name, st\_value, st\_size, st\_info, st\_other, st\_shndx, name); 
 
-`    `} 
+    } 
 
 } 
 
@@ -1017,63 +1017,63 @@ import java.util.Objects;
 
 public class Header{ 
 
-`    `public long e\_type; 
+    public long e\_type; 
 
-`    `public long e\_machine; 
+    public long e\_machine; 
 
-`    `public long e\_version; 
+    public long e\_version; 
 
-`    `public long e\_entry; 
+    public long e\_entry; 
 
-`    `public long e\_phoff; 
+    public long e\_phoff; 
 
-`    `public long e\_shoff; 
+    public long e\_shoff; 
 
-`    `public long e\_flags; 
+    public long e\_flags; 
 
-`    `public long e\_ehsize; 
+    public long e\_ehsize; 
 
-`    `public long e\_phentsize; 
+    public long e\_phentsize; 
 
-`    `public long e\_phnum; 
+    public long e\_phnum; 
 
-`    `public long e\_shentsize; 
+    public long e\_shentsize; 
 
-`    `public long e\_shnum; 
+    public long e\_shnum; 
 
-`    `public long e\_shstrndx; 
+    public long e\_shstrndx; 
 
-`    `public Header() throws Exception { 
+    public Header() throws Exception { 
 
-`        `e\_type = Constants.*extractBytes*(16, 2); 
+        e\_type = Constants.*extractBytes*(16, 2); 
 
-`        `e\_machine = Constants.*extractBytes*(18, 2);         e\_version = Constants.*extractBytes*(20, 4);         e\_entry = Constants.*extractBytes*(24, 4);         e\_phoff = Constants.*extractBytes*(28, 4);         e\_shoff = Constants.*extractBytes*(32, 4);         e\_flags = Constants.*extractBytes*(36, 4);         e\_ehsize = Constants.*extractBytes*(40, 2); 
+        e\_machine = Constants.*extractBytes*(18, 2);         e\_version = Constants.*extractBytes*(20, 4);         e\_entry = Constants.*extractBytes*(24, 4);         e\_phoff = Constants.*extractBytes*(28, 4);         e\_shoff = Constants.*extractBytes*(32, 4);         e\_flags = Constants.*extractBytes*(36, 4);         e\_ehsize = Constants.*extractBytes*(40, 2); 
 
-`        `e\_phentsize = Constants.*extractBytes*(42, 2);         e\_phnum = Constants.*extractBytes*(44, 2); 
+        e\_phentsize = Constants.*extractBytes*(42, 2);         e\_phnum = Constants.*extractBytes*(44, 2); 
 
-`        `e\_shentsize = Constants.*extractBytes*(46, 2);         e\_shnum = Constants.*extractBytes*(48, 2); 
+        e\_shentsize = Constants.*extractBytes*(46, 2);         e\_shnum = Constants.*extractBytes*(48, 2); 
 
-`        `e\_shstrndx = Constants.*extractBytes*(50, 2);     } 
+        e\_shstrndx = Constants.*extractBytes*(50, 2);     } 
 
-`    `@Override 
+    @Override 
 
-`    `public boolean equals(Object o) {         if (this == o) return true; 
+    public boolean equals(Object o) {         if (this == o) return true; 
 
-`        `if (o == null || getClass() != o.getClass()) return false; 
+        if (o == null || getClass() != o.getClass()) return false; 
 
-`        `Header header = (Header) o; 
+        Header header = (Header) o; 
 
-`        `return e\_type == header.e\_type && e\_machine == header.e\_machine && e\_version == header.e\_version && e\_entry == header.e\_entry && e\_phoff == header.e\_phoff && e\_shoff == header.e\_shoff && e\_flags == header.e\_flags && e\_ehsize == header.e\_ehsize && e\_phentsize == header.e\_phentsize && e\_phnum == header.e\_phnum && e\_shentsize == header.e\_shentsize && e\_shnum == header.e\_shnum && e\_shstrndx == header.e\_shstrndx; 
+        return e\_type == header.e\_type && e\_machine == header.e\_machine && e\_version == header.e\_version && e\_entry == header.e\_entry && e\_phoff == header.e\_phoff && e\_shoff == header.e\_shoff && e\_flags == header.e\_flags && e\_ehsize == header.e\_ehsize && e\_phentsize == header.e\_phentsize && e\_phnum == header.e\_phnum && e\_shentsize == header.e\_shentsize && e\_shnum == header.e\_shnum && e\_shstrndx == header.e\_shstrndx; 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public int hashCode() { 
+    public int hashCode() { 
 
-`        `return Objects.*hash*(e\_type, e\_machine, e\_version, e\_entry, e\_phoff, e\_shoff, e\_flags, e\_ehsize, e\_phentsize, e\_phnum, e\_shentsize, e\_shnum, e\_shstrndx); 
+        return Objects.*hash*(e\_type, e\_machine, e\_version, e\_entry, e\_phoff, e\_shoff, e\_flags, e\_ehsize, e\_phentsize, e\_phnum, e\_shentsize, e\_shnum, e\_shstrndx); 
 
-`    `} 
+    } 
 
 }; 
 
@@ -1083,45 +1083,45 @@ import java.util.Objects;
 
 public class SectionHeader{     public long sh\_name; 
 
-`    `public long sh\_type; 
+    public long sh\_type; 
 
-`    `public long sh\_flags; 
+    public long sh\_flags; 
 
 public long sh\_addr; public long sh\_offset; public long sh\_size; public long sh\_link; public long sh\_info; public long sh\_addralign; public long sh\_entsize; 
 
-`    `public SectionHeader(long e\_shoff, long index, long e\_shentsize) throws Exception { 
+    public SectionHeader(long e\_shoff, long index, long e\_shentsize) throws Exception { 
 
-`        `sh\_name = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 0, 4); 
+        sh\_name = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 0, 4); 
 
-`        `sh\_type = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 4, 4); 
+        sh\_type = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 4, 4); 
 
-`        `sh\_flags = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 8, 4);         sh\_addr = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 12, 4);         sh\_offset = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 16, 4);         sh\_size = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 20, 4);         sh\_link = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 24, 4);         sh\_info = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 28, 4);         sh\_addralign = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 32, 4); 
+        sh\_flags = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 8, 4);         sh\_addr = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 12, 4);         sh\_offset = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 16, 4);         sh\_size = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 20, 4);         sh\_link = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 24, 4);         sh\_info = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 28, 4);         sh\_addralign = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 32, 4); 
 
-`        `sh\_entsize = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 36, 
+        sh\_entsize = Constants.*extractBytes*(e\_shoff + index \* e\_shentsize + 36, 
 
 4);     } 
 
-`    `@Override 
+    @Override 
 
-`    `public boolean equals(Object o) { 
+    public boolean equals(Object o) { 
 
-`        `if (this == o) return true; 
+        if (this == o) return true; 
 
-`        `if (o == null || getClass() != o.getClass()) return false; 
+        if (o == null || getClass() != o.getClass()) return false; 
 
-`        `SectionHeader that = (SectionHeader) o; 
+        SectionHeader that = (SectionHeader) o; 
 
-`        `return sh\_name == that.sh\_name && sh\_type == that.sh\_type && sh\_flags == that.sh\_flags && sh\_addr == that.sh\_addr && sh\_offset == that.sh\_offset && sh\_size == that.sh\_size && sh\_link == that.sh\_link && sh\_info == that.sh\_info && sh\_addralign == that.sh\_addralign && sh\_entsize == that.sh\_entsize; 
+        return sh\_name == that.sh\_name && sh\_type == that.sh\_type && sh\_flags == that.sh\_flags && sh\_addr == that.sh\_addr && sh\_offset == that.sh\_offset && sh\_size == that.sh\_size && sh\_link == that.sh\_link && sh\_info == that.sh\_info && sh\_addralign == that.sh\_addralign && sh\_entsize == that.sh\_entsize; 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public int hashCode() { 
+    public int hashCode() { 
 
-`        `return Objects.*hash*(sh\_name, sh\_type, sh\_flags, sh\_addr, sh\_offset, sh\_size, sh\_link, sh\_info, sh\_addralign, sh\_entsize); 
+        return Objects.*hash*(sh\_name, sh\_type, sh\_flags, sh\_addr, sh\_offset, sh\_size, sh\_link, sh\_info, sh\_addralign, sh\_entsize); 
 
-`    `} 
+    } 
 
 } 
 
@@ -1131,243 +1131,243 @@ import java.util.ArrayList; import java.util.HashMap; import java.util.List; imp
 
 import static java.util.Map.*entry*; public final class Constants { 
 
-`    `public static final long *ELF\_MAGIC* = 0x464C457F; 
+    public static final long *ELF\_MAGIC* = 0x464C457F; 
 
-`    `public static long[] *bytes*; 
+    public static long[] *bytes*; 
 
-`    `public static long *TAGINDEX* = 0; 
+    public static long *TAGINDEX* = 0; 
 
-`    `public static long *TOTAL*; 
+    public static long *TOTAL*; 
 
-`    `public static Map<String, SectionHeader> *sections* = new HashMap<>(); 
+    public static Map<String, SectionHeader> *sections* = new HashMap<>(); 
 
-`    `public static Map<Long, String> *tags* = new HashMap<Long, String>(); 
+    public static Map<Long, String> *tags* = new HashMap<Long, String>(); 
 
-`    `public static List<Symbol> *symbols* = new ArrayList<>(); 
+    public static List<Symbol> *symbols* = new ArrayList<>(); 
 
-`    `public static final Map<Pair<Integer, Integer>, String> *FmtRM* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "add"), 
+    public static final Map<Pair<Integer, Integer>, String> *FmtRM* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "add"), 
 
-`            `*entry*(new Pair<>(0,0x20), "sub"), 
+            *entry*(new Pair<>(0,0x20), "sub"), 
 
-`            `*entry*(new Pair<>(0x4,0), "xor"), 
+            *entry*(new Pair<>(0x4,0), "xor"), 
 
-`            `*entry*(new Pair<>(0x6,0), "or"), 
+            *entry*(new Pair<>(0x6,0), "or"), 
 
-`            `*entry*(new Pair<>(0x7,0), "and"), 
+            *entry*(new Pair<>(0x7,0), "and"), 
 
-`            `*entry*(new Pair<>(0x1,0), "sli"), 
+            *entry*(new Pair<>(0x1,0), "sli"), 
 
-`            `*entry*(new Pair<>(0x5,0), "srl"), 
+            *entry*(new Pair<>(0x5,0), "srl"), 
 
-`            `*entry*(new Pair<>(0x5,0x20), "sra"), 
+            *entry*(new Pair<>(0x5,0x20), "sra"), 
 
-`            `*entry*(new Pair<>(0x2,0), "slt"), 
+            *entry*(new Pair<>(0x2,0), "slt"), 
 
-`            `*entry*(new Pair<>(0x3,0), "sltu"), 
+            *entry*(new Pair<>(0x3,0), "sltu"), 
 
-`            `*entry*(new Pair<>(0x0,0x1), "mul"), 
+            *entry*(new Pair<>(0x0,0x1), "mul"), 
 
-`            `*entry*(new Pair<>(0x1,0x1), "mulh"), 
+            *entry*(new Pair<>(0x1,0x1), "mulh"), 
 
-`            `*entry*(new Pair<>(0x2,0x1), "mulsu"), 
+            *entry*(new Pair<>(0x2,0x1), "mulsu"), 
 
-`            `*entry*(new Pair<>(0x3,0x1), "mulu"), 
+            *entry*(new Pair<>(0x3,0x1), "mulu"), 
 
-`            `*entry*(new Pair<>(0x4,0x1), "div"), 
+            *entry*(new Pair<>(0x4,0x1), "div"), 
 
-`            `*entry*(new Pair<>(0x5,0x1), "divu"), 
+            *entry*(new Pair<>(0x5,0x1), "divu"), 
 
-`            `*entry*(new Pair<>(0x6,0x1), "rem"), 
+            *entry*(new Pair<>(0x6,0x1), "rem"), 
 
-`            `*entry*(new Pair<>(0x7,0x1), "remu") 
+            *entry*(new Pair<>(0x7,0x1), "remu") 
 
-`    `); 
+    ); 
 
-`    `public static final Map<Pair<Integer, Integer>, String> *FmtI* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "addi"), 
+    public static final Map<Pair<Integer, Integer>, String> *FmtI* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "addi"), 
 
-`            `*entry*(new Pair<>(0x4, 0), "xori"), 
+            *entry*(new Pair<>(0x4, 0), "xori"), 
 
-`            `*entry*(new Pair<>(0x6, 0), "ori"), 
+            *entry*(new Pair<>(0x6, 0), "ori"), 
 
-`            `*entry*(new Pair<>(0x7, 0), "0"), 
+            *entry*(new Pair<>(0x7, 0), "0"), 
 
-`            `*entry*(new Pair<>(0x1, 0), "slli"), 
+            *entry*(new Pair<>(0x1, 0), "slli"), 
 
-`            `*entry*(new Pair<>(0x5, 0), "srli"), 
+            *entry*(new Pair<>(0x5, 0), "srli"), 
 
-`            `*entry*(new Pair<>(0x5, 0x20), "srai"), 
+            *entry*(new Pair<>(0x5, 0x20), "srai"), 
 
-`            `*entry*(new Pair<>(0x2, 0), "slti"), 
+            *entry*(new Pair<>(0x2, 0), "slti"), 
 
-`            `*entry*(new Pair<>(0x3, 0), "sltiu") 
+            *entry*(new Pair<>(0x3, 0), "sltiu") 
 
-`    `); 
+    ); 
 
-`    `public static final Map<Pair<Integer, Integer>, String> *FmtILoad* = Map.*ofEntries*( 
+    public static final Map<Pair<Integer, Integer>, String> *FmtILoad* = Map.*ofEntries*( 
 
-`            `*entry*(new Pair<>(0, 0), "lb"), 
+            *entry*(new Pair<>(0, 0), "lb"), 
 
-`            `*entry*(new Pair<>(0x1, 0), "lh"), 
+            *entry*(new Pair<>(0x1, 0), "lh"), 
 
-`            `*entry*(new Pair<>(0x2, 0), "lw"), 
+            *entry*(new Pair<>(0x2, 0), "lw"), 
 
-`            `*entry*(new Pair<>(0x4, 0), "lbu"), 
+            *entry*(new Pair<>(0x4, 0), "lbu"), 
 
-`            `*entry*(new Pair<>(0x5, 0), "lhu") 
+            *entry*(new Pair<>(0x5, 0), "lhu") 
 
-`    `); 
+    ); 
 
-`    `public static final Map<Pair<Integer, Integer>, String> *FmtS* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "sb"), 
+    public static final Map<Pair<Integer, Integer>, String> *FmtS* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "sb"), 
 
-`            `*entry*(new Pair<>(0x1, 0), "sh"), 
+            *entry*(new Pair<>(0x1, 0), "sh"), 
 
-`            `*entry*(new Pair<>(0x2, 0), "sw") 
+            *entry*(new Pair<>(0x2, 0), "sw") 
 
-`    `); 
+    ); 
 
-`    `public static final Map<Pair<Integer, Integer>, String> *FmtB* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "beq"), 
+    public static final Map<Pair<Integer, Integer>, String> *FmtB* = Map.*ofEntries*(             *entry*(new Pair<>(0, 0), "beq"), 
 
-`            `*entry*(new Pair<>(0x1, 0), "bne"), 
+            *entry*(new Pair<>(0x1, 0), "bne"), 
 
-`            `*entry*(new Pair<>(0x4, 0), "blt"), 
+            *entry*(new Pair<>(0x4, 0), "blt"), 
 
-`            `*entry*(new Pair<>(0x5, 0), "bge"), 
+            *entry*(new Pair<>(0x5, 0), "bge"), 
 
-`            `*entry*(new Pair<>(0x6, 0), "bltu"), 
+            *entry*(new Pair<>(0x6, 0), "bltu"), 
 
-`            `*entry*(new Pair<>(0x7, 0), "bgeu") 
+            *entry*(new Pair<>(0x7, 0), "bgeu") 
 
-`    `); 
+    ); 
 
-`    `public static final Map<Integer, String> *registerNames* = Map.*ofEntries*( 
+    public static final Map<Integer, String> *registerNames* = Map.*ofEntries*( 
 
-`            `*entry*(0, "zero"), 
+            *entry*(0, "zero"), 
 
-`            `*entry*(1, "ra"), 
+            *entry*(1, "ra"), 
 
-`            `*entry*(2, "sp"), 
+            *entry*(2, "sp"), 
 
-`            `*entry*(3, "gp"), 
+            *entry*(3, "gp"), 
 
-`            `*entry*(4, "tp"), 
+            *entry*(4, "tp"), 
 
-`            `*entry*(5, "t0"), 
+            *entry*(5, "t0"), 
 
-`            `*entry*(6, "t1"), 
+            *entry*(6, "t1"), 
 
-`            `*entry*(7, "t2"), 
+            *entry*(7, "t2"), 
 
-`            `*entry*(8, "s0 / fp"), 
+            *entry*(8, "s0 / fp"), 
 
-`            `*entry*(9, "s1"), 
+            *entry*(9, "s1"), 
 
-`            `*entry*(10, "a0"), 
+            *entry*(10, "a0"), 
 
-`            `*entry*(11, "a1"), 
+            *entry*(11, "a1"), 
 
-`            `*entry*(12, "a2"), 
+            *entry*(12, "a2"), 
 
-`            `*entry*(13, "a3"), 
+            *entry*(13, "a3"), 
 
-`            `*entry*(14, "a4"), 
+            *entry*(14, "a4"), 
 
-`            `*entry*(15, "a5"), 
+            *entry*(15, "a5"), 
 
-`            `*entry*(16, "a6"), 
+            *entry*(16, "a6"), 
 
-`            `*entry*(17, "a7"), 
+            *entry*(17, "a7"), 
 
-`            `*entry*(18, "s2"), 
+            *entry*(18, "s2"), 
 
-`            `*entry*(19, "s3"), 
+            *entry*(19, "s3"), 
 
-`            `*entry*(20, "s4"), 
+            *entry*(20, "s4"), 
 
-`            `*entry*(21, "s5"), 
+            *entry*(21, "s5"), 
 
-`            `*entry*(22, "s6"), 
+            *entry*(22, "s6"), 
 
-`            `*entry*(23, "s7"), 
+            *entry*(23, "s7"), 
 
-`            `*entry*(24, "s8"),             *entry*(25, "s9"),             *entry*(26, "s10"),             *entry*(27, "s11"),             *entry*(28, "t3"),             *entry*(29, "t4"),             *entry*(30, "t5"),             *entry*(31, "t6")     ); 
+            *entry*(24, "s8"),             *entry*(25, "s9"),             *entry*(26, "s10"),             *entry*(27, "s11"),             *entry*(28, "t3"),             *entry*(29, "t4"),             *entry*(30, "t5"),             *entry*(31, "t6")     ); 
 
-`    `public enum FMT{ 
+    public enum FMT{ 
 
-`        `*RM*, 
+        *RM*, 
 
-`        `*I*, 
+        *I*, 
 
-`        `*ILoad*, 
+        *ILoad*, 
 
-`        `*S*, 
+        *S*, 
 
-`        `*B*, 
+        *B*, 
 
-`        `*J*, 
+        *J*, 
 
-`        `*IJalr*, 
+        *IJalr*, 
 
-`        `*ULui*, 
+        *ULui*, 
 
-`        `*UAui*, 
+        *UAui*, 
 
-`        `*IEnv*, 
+        *IEnv*, 
 
-`        `*unknown\_instruction*     }; 
+        *unknown\_instruction*     }; 
 
-`    `public static long extractBytes(long offset, long byteNum) throws Exception {         if (byteNum <= 0 || byteNum > 4) { 
+    public static long extractBytes(long offset, long byteNum) throws Exception {         if (byteNum <= 0 || byteNum > 4) { 
 
-`            `throw new Exception("Wrong number of bytes to read in extractBytes()"); 
+            throw new Exception("Wrong number of bytes to read in extractBytes()"); 
 
-`        `} 
+        } 
 
-`        `long result = 0; 
+        long result = 0; 
 
-`        `for(long i = 0; i < byteNum; i++){ 
+        for(long i = 0; i < byteNum; i++){ 
 
-`            `if (offset + byteNum - i - 1 < 0 || offset + byteNum - i - 1 >= *TOTAL*) { 
+            if (offset + byteNum - i - 1 < 0 || offset + byteNum - i - 1 >= *TOTAL*) { 
 
-`                `throw new Exception("Index out of boundaries when trying to read in extractBytes()"); 
+                throw new Exception("Index out of boundaries when trying to read in extractBytes()"); 
 
-`            `} 
+            } 
 
-`            `result = result \* 256 + (*bytes*[(int) (offset + byteNum - i - 1)]); 
+            result = result \* 256 + (*bytes*[(int) (offset + byteNum - i - 1)]); 
 
-`        `} 
+        } 
 
-`        `return result; 
+        return result; 
 
-`    `} 
+    } 
 
-`    `public static long cutInstruction(long bin, long from, long to) { 
+    public static long cutInstruction(long bin, long from, long to) { 
 
-`        `bin = bin & ((1L << (from + 1)) - 1); 
+        bin = bin & ((1L << (from + 1)) - 1); 
 
-`        `bin = bin & (-(1L << to)); 
+        bin = bin & (-(1L << to)); 
 
-`        `return (bin >> to); 
+        return (bin >> to); 
 
-`    `} 
+    } 
 
-`    `public static long immToSigned(long n, long where){ 
+    public static long immToSigned(long n, long where){ 
 
-`        `if ((n & (1L << (where - 1))) != 0) { 
+        if ((n & (1L << (where - 1))) != 0) { 
 
-`            `return (n | -(1L << where)); 
+            return (n | -(1L << where)); 
 
-`        `} 
+        } 
 
-`        `else { 
+        else { 
 
-`            `return n; 
+            return n; 
 
-`        `} 
+        } 
 
-`    `} 
+    } 
 
-`    `private Constants(){ 
+    private Constants(){ 
 
-`    `} } 
+    } } 
 
 **Pair.java** 
 
@@ -1375,52 +1375,52 @@ import java.util.Objects;
 
 public class Pair<F, S>{ 
 
-`    `private F first; 
+    private F first; 
 
-`    `private S second; 
+    private S second; 
 
-`    `public Pair(F first, S second) {         this.first = first; 
+    public Pair(F first, S second) {         this.first = first; 
 
-`        `this.second = second; 
+        this.second = second; 
 
-`    `} 
+    } 
 
-`    `public void setFirst(F first) {         this.first = first; 
+    public void setFirst(F first) {         this.first = first; 
 
-`    `} 
+    } 
 
-`    `public void setSecond(S second) {         this.second = second; 
+    public void setSecond(S second) {         this.second = second; 
 
-`    `} 
+    } 
 
-`    `public F getFirst() { 
+    public F getFirst() { 
 
-`        `return first; 
+        return first; 
 
-`    `} 
+    } 
 
-`    `public S getSecond() { 
+    public S getSecond() { 
 
-`        `return second; 
+        return second; 
 
-`    `} 
+    } 
 
-`    `@Override 
+    @Override 
 
-`    `public boolean equals(Object o) { 
+    public boolean equals(Object o) { 
 
-`        `if (this == o) return true; 
+        if (this == o) return true; 
 
-`        `if (o == null || getClass() != o.getClass()) return false; 
+        if (o == null || getClass() != o.getClass()) return false; 
 
-`        `Pair<?, ?> pair = (Pair<?, ?>) o; 
+        Pair<?, ?> pair = (Pair<?, ?>) o; 
 
-`        `return first.equals(pair.first) && second.equals(pair.second);     } 
+        return first.equals(pair.first) && second.equals(pair.second);     } 
 
-`    `@Override 
+    @Override 
 
-`    `public int hashCode() { 
+    public int hashCode() { 
 
-`        `return Objects.*hash*(first, second);     } 
+        return Objects.*hash*(first, second);     } 
 
 } 
