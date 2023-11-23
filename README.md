@@ -1,11 +1,15 @@
-﻿**Quickstart**
+﻿<h2>Quickstart</h2>
+
 Требуется JDK 17+
+
 ```
 java Main.java
 javac Main rv3 test.elf out.txt
 ```
-Результат работы дизассемблера лежит в out.txt
 
+Результат работы дизассемблера лежит в out.txt.
+
+</hr>
 
 **Описание системы кодирования команд RISC-V** 
 
